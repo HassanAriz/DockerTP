@@ -8,17 +8,18 @@ services:
             - MYSQL_DATABASE=docker
             - MYSQL_USER=Hassan
             - MYSQL_PASSWORD=Ariz
-            - MYSQL_RANDOM_ROOT_PASSWORD=yes
+            
     adminer:
         image: 'adminer:latest'
         ports:
             - '50000:8080'
     php:
+        build: ./php
         image: 'apache/php7.2'
         ports:
             - '30000:8081'
-        volumes:
-            - './:/usr/share/nginx/html'
+        depends_on:
+            -mariadb
         environment:
             - PHP_EXTENSIONS=pdo_mysql
         
